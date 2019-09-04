@@ -6,7 +6,9 @@ let v_rate;
 let v_paytime;
 let v_timetype;
 /*中间变量区*/
-
+let t_year;
+let t_month;
+let t_mrate;
 /*结果区*/
 
 //=================================
@@ -88,12 +90,26 @@ function SetValue(m_total,m_pay,m_int,bi_total,bi_pay,bi_int){
 
 function Calculate(){
     if(CheckValue()==true){
+        //set default value
         v_balance=balance.value;
         v_paytime=paytime.value;
         v_rate=rate.value;
         v_timetype=timeselect.value;
+
+        if(v_timetype==1){
+            t_year=v_paytime;
+            t_month=t_year*12;
+        }else{
+            t_month=v_paytime;
+            t_year=Math.ceil(t_month/12);
+        }
+        //月供
+
+        //双周供
+
     }
 }
 /**
  * powered by Fungus-Light
+ * https://github.com/Fungus-Light
  */
