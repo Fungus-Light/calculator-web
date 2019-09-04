@@ -1,0 +1,84 @@
+<html>
+
+<head>
+    <title>Calculator</title>
+    <link rel="stylesheet" href="materialize/css/materialize.css">
+    <link rel="stylesheet" href="materialize/iconfont/material-icons.css">
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper blue-grey darken-4">
+            <a href="#" class="brand-logo center">Calculator</a>
+            <ul id="nav-mobile" class="right">
+                <li><a href="#!">帮助</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="row">
+        <div class="col s6">
+            <div class="card blue-grey lighten-5">
+                <div class="card-content black-text">
+                    <span class="card-title">在这里输入各种数据</span>
+                    <div class="row">
+                        <form class="col s12">
+                            <div class="input-field col s12">
+                                <input id="balance" type="text" class="validate">
+                                <label for="balance">贷款金额</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <input id="rate" type="text" class="validate">
+                                <label for="rate">贷款年利润（%）</label>
+                            </div>
+                            <div class="input-field col s7">
+                                <input id="paytime" type="text" class="validate">
+                                <label for="paytime">还款期限</label>
+                            </div>
+
+                            <div class="input-field col s5">
+                                <select>
+                                    <option value="" disabled selected>选择时间类型</option>
+                                    <option value="1">年</option>
+                                    <option value="2">月</option>
+                                    <option value="3">周</option>
+                                </select>
+                                <label>时间类型</label>
+                            </div>
+                            <div class="switch">
+                                <label>
+                                    Off
+                                    <input type="checkbox">
+                                    <span class="lever"></span>
+                                    On
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="card-action">
+                    <a class="blue-grey darken-3 waves-effect waves-light btn"><i
+                            class="material-icons left">add</i>计算</a>
+                    <a class="blue-grey darken-3 waves-effect waves-light btn"><i
+                            class="material-icons left">refresh</i>清空</a>
+                </div>
+            </div>
+        </div>
+        <div class="col s6">
+            <div class="card blue-grey lighten-5">
+                <div class="card-content black-text">
+                    <span class="card-title">结果</span>
+                    <p>尚未计算</p>
+                </div>
+                <div class="card-action">
+                    <a class="blue-grey darken-3 waves-effect waves-light btn"><i
+                            class="material-icons left">arrow_downward</i>下载文本</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="materialize/js/materialize.js"></script>
+    <script src="logic.js"></script>
+</body>
+
+</html>
