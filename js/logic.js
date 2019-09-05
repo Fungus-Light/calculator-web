@@ -35,9 +35,10 @@ let paytime = document.getElementById("paytime");
 
 let timeselect = document.getElementById("time_type");
 let tablescwitcher = document.getElementById("istableshow");
-tablescwitcher.addEventListener('click', () => {
-    istableshow = !istableshow;
-})
+// tablescwitcher.addEventListener('click', () => {
+//     istableshow = !istableshow;
+// });
+tablescwitcher.onclick=function () {istableshow = !istableshow;  }
 //==================================
 /*功能按钮*/
 let fresh_btn = document.getElementById("refresh-btn");
@@ -57,21 +58,35 @@ let biweekintr = document.getElementById("biweek-intr");
 //==================================
 let tbody = document.getElementById("tbody");
 //==================================
-fresh_btn.addEventListener('click', () => {
+// fresh_btn.addEventListener('click', function(){
+//     window.location.reload();
+// });
+fresh_btn.onclick=function(){
     window.location.reload();
-})
-cal_btn.addEventListener('click', () => {
-    Calculate();
-});
-cls_btn.addEventListener('click', () => {
+};
+// cal_btn.addEventListener('click', function(){
+//     Calculate();
+// });
+cal_btn.onclick=function () {Calculate();  }
+cls_btn.onclick=function(){
     Clear();
     ClearTable();
-});
-dl_txt_btn.addEventListener('click',()=>{
+}
+// cls_btn.addEventListener('click', function(){
+//     Clear();
+//     ClearTable();
+// });
+// dl_txt_btn.addEventListener('click',function(){
+//     if(CheckValue()==true){
+//         DownLoadTxt('result.txt',r_txt);
+//     }
+// })
+
+dl_txt_btn.onclick=function(){
     if(CheckValue()==true){
         DownLoadTxt('result.txt',r_txt);
     }
-})
+}
 //==================================
 function CheckValue() {
     if (balance.value.length < 1 || rate.value.length < 1 || paytime.value.length < 1 || timeselect.value.length < 1) {
