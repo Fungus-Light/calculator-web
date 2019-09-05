@@ -17,3 +17,8 @@ function AddTableElement(_y,_month,_biweek){
     let temp=MakeUpTable(_y,_month,_biweek);
     tbody.appendChild(temp);
 }
+
+/**
+ * powered by Fungus-Light
+ * https://github.com/Fungus-Light
+ */

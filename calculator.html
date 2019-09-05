@@ -33,7 +33,7 @@
                             </div>
                             <div class="input-field col s12">
                                 <input id="rate" type="text" class="validate">
-                                <label for="rate">贷款年利润（%）</label>
+                                <label for="rate">贷款年利率（%）</label>
                             </div>
                             <div class="input-field col s7">
                                 <input id="paytime" type="text" class="validate">
@@ -44,7 +44,7 @@
                                 <select id="time_type">
                                     <option value="" disabled selected>选择时间类型</option>
                                     <option value="1">年</option>
-                                    <option value="2">月</option>
+                                    <!-- <option value="2">月</option> -->
                                 </select>
                                 <label>时间类型</label>
                             </div>
@@ -110,7 +110,7 @@
                     </div>
                 </div>
                 <div class="card-action">
-                    <a class="blue-grey darken-3 waves-effect waves-light btn"><i
+                    <a id="dowload-txt" class="blue-grey darken-3 waves-effect waves-light btn"><i
                             class="material-icons left">arrow_downward</i>下载文本</a>
                 </div>
             </div>
@@ -138,8 +138,8 @@
                 <div class="card-action">
                     <a class="blue-grey darken-3 waves-effect waves-light btn"><i
                             class="material-icons left">arrow_downward</i>导出表格</a>
-                    <a id="test-btn" class="blue-grey darken-3 waves-effect waves-light btn"><i
-                            class="material-icons left">add</i>test</a>
+                    <!-- <a id="test-btn" class="blue-grey darken-3 waves-effect waves-light btn"><i
+                            class="material-icons left">add</i>test</a> -->
                 </div>
             </div>
         </div>
@@ -148,9 +148,12 @@
     <div id="help-content" class="modal">
         <div class="modal-content">
             <h4>帮助</h4>
-            <p>在左侧按照标签填写各项数值，各项数值不能为空，然后点击“计算”按钮，在右侧获得结果。根据选择会决定是否显示《本金剩余计算表》 推荐使用Chrome、Edge、Firefox等较新浏览器
-
-                不要使用IE（IE就是个垃圾）</p>
+            <pre>
+左侧按照标签填写各项数值，然后点击“计算”按钮，在右侧获得结果。
+推荐使用Chrome、Edge、Firefox等较新浏览器
+不要使用IE（IE就是个垃圾）
+目前仅支持按年计算
+            </pre>
         </div>
 
         <div class="modal-footer">
