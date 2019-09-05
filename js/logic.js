@@ -1,4 +1,3 @@
-M.AutoInit();
 //=================================
 /*初始变量区*/
 let v_balance;
@@ -26,6 +25,7 @@ tablescwitcher.addEventListener('click', () => {
 })
 //==================================
 /*功能按钮*/
+let fresh_btn=document.getElementById("refresh-btn");
 let cal_btn = document.getElementById("calculate_btn");
 let cls_btn = document.getElementById("clear_btn");
 //==================================
@@ -40,6 +40,9 @@ let biweekintr=document.getElementById("biweek-intr");
 //==================================
 let tbody=document.getElementById("tbody");
 //==================================
+fresh_btn.addEventListener('click',()=>{
+    window.location.reload();
+})
 cal_btn.addEventListener('click', () => {
     Calculate();
 });
@@ -109,6 +112,13 @@ function Calculate(){
 
     }
 }
+
+//====================================
+let testbtn=document.getElementById("test-btn");
+testbtn.addEventListener('click',()=>{
+    AddTableElement();
+})
+//====================================
 /**
  * powered by Fungus-Light
  * https://github.com/Fungus-Light
