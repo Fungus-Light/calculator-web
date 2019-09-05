@@ -68,7 +68,9 @@ cls_btn.addEventListener('click', () => {
     ClearTable();
 });
 dl_txt_btn.addEventListener('click',()=>{
-    DownLoadTxt('result.txt',r_txt);
+    if(CheckValue()==true){
+        DownLoadTxt('result.txt',r_txt);
+    }
 })
 //==================================
 function CheckValue() {
