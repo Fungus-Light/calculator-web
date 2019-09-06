@@ -9,13 +9,13 @@
 </head>
 
 <body>
-<!-- 
+
     <script>
-        if(!!window.ActiveXObject||'ActiveXObject' in window){
-            window.alert("您正在使用IE浏览器，请允许脚本等加载项，仅在IE11测试通过，不保证在更低版本上能够正常运行。推荐使用Chrome，FireFox，Edge。");
+        if(window.navigator.userAgent.indexOf("MSIE")>=1){
+            window.alert("您正在使用IE11以下浏览器，请允许脚本等加载项，仅在IE11测试通过，不保证在更低版本上能够正常运行。推荐使用Chrome，FireFox，Edge。");
         }
         
-    </script> -->
+    </script>
 
 
     <nav>
@@ -54,7 +54,7 @@
                                 <select id="time_type">
                                     <option value="" disabled selected>选择时间类型</option>
                                     <option value="1">年</option>
-                                    <!-- <option value="2">月</option> -->
+                                    <option value="2">月</option>
                                 </select>
                                 <label>时间类型</label>
                             </div>
@@ -128,7 +128,7 @@
         <div class="col s12">
             <div class="card blue-grey lighten-5">
                 <div class="card-content black-text">
-                    <span class="card-title">本金剩余计算表</span>
+                    <span class="card-title">本金剩余计算表(单位：￥)</span>
                 </div>
                 <div>
                     <table class="centered">
@@ -146,10 +146,8 @@
                     </table>
                 </div>
                 <!-- <div class="card-action">
-                    <a class="blue-grey darken-3 waves-effect waves-light btn"><i
+                    <a id="dowload-xls" class="blue-grey darken-3 waves-effect waves-light btn"><i
                             class="material-icons left">arrow_downward</i>导出表格</a>
-                     <a id="test-btn" class="blue-grey darken-3 waves-effect waves-light btn"><i
-                            class="material-icons left">add</i>test</a>
                 </div> -->
             </div>
         </div>
@@ -158,11 +156,11 @@
     <div id="help-content" class="modal">
         <div class="modal-content">
             <h4>帮助</h4>
-            <pre>
-左侧按照标签填写各项数值，然后点击“计算”按钮，在右侧获得结果。
+            <pre style="font-size: 22px;">
+左侧按照标签填写各项数值，点击“计算”按钮，在右侧获得结果。
 推荐使用Chrome、Edge、Firefox等较新浏览器
-不推荐使用IE（仅在IE11测试完成）
-目前仅支持按年计算
+仅在IE11测试完成
+!不推荐使用IE11以下版本!
             </pre>
         </div>
 
@@ -172,6 +170,7 @@
     </div>
 
     <script src="materialize/js/materialize.js"></script>
+    <script src="js_xlsl/xlsx.full.min.js"></script>
     <script src="js/render.js"></script>
     <script src="./js/logic.js"></script>
 </body>

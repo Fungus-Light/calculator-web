@@ -12,6 +12,8 @@ let t_real_mrate;
 let t_real_yrate;
 let t_real_drate;
 let t_real_bwrate;
+
+let t_json_excel;
 /*结果区*/
 let r_month_topay;
 let r_m_all_intr;
@@ -25,6 +27,7 @@ let r_m_line;
 let r_bw_line;
 
 let r_txt;
+let r_excel;
 //=================================
 let istableshow = false;
 //=================================
@@ -46,6 +49,7 @@ let cal_btn = document.getElementById("calculate_btn");
 let cls_btn = document.getElementById("clear_btn");
 
 let dl_txt_btn=document.getElementById("dowload-txt");
+// let dl_xls_btn=document.getElementById("dowload-xls");
 //==================================
 /*结果呈现区*/
 let monthtotal = document.getElementById("mon-intrest");
@@ -87,6 +91,18 @@ dl_txt_btn.onclick=function(){
         DownLoadTxt('result.txt',r_txt);
     }
 }
+// dl_xls_btn.onclick=function(){
+//     if(CheckValue()==true){
+//         if(istableshow){
+//             let temp= XLSX.utils.sheet_to_csv(r_excel);
+//             console.log(typeof(temp));
+//             DownLoadTxt("result.csv",EncodeUTF16(temp));
+//         }else{
+//             alert("未生成表格！！！");
+//         }
+
+//     }
+// }
 //==================================
 function CheckValue() {
     if (balance.value.length < 1 || rate.value.length < 1 || paytime.value.length < 1 || timeselect.value.length < 1) {
@@ -168,11 +184,14 @@ function Calculate() {
 
         let t_current_balance = v_balance;
         r_m_line = new Array();
-        for (let i = 1; i <= t_month; i++) {
+        for (let i = 1; i <= t_year*12; i++) {
             let t_pay_perbalance = r_month_topay - t_current_balance * t_real_mrate;
             t_current_balance -= t_pay_perbalance;
             if (i % 12 == 0) {
                 let temp = t_current_balance.toFixed(2);
+                if(temp<=0){
+                    temp=0;
+                }
                 r_m_line.push(temp);
             }
         }
@@ -192,22 +211,54 @@ function Calculate() {
         t_real_bwrate = Math.pow((1 + t_real_drate), 14) - 1;
 
         t_q = 1 / (t_real_bwrate + 1);
-        r_bweek_topay = v_balance * ((t_q - 1) / (t_q * (Math.pow((t_q), t_year * 26) - 1)));
-        r_bw_all_intr = t_year * 26 * r_bweek_topay - v_balance;
-        r_bw_per_intr = r_bw_all_intr / (t_year * 26);
+
+        // r_bweek_topay = v_balance * ((t_q - 1) / (t_q * (Math.pow((t_q), t_year * 26) - 1)));
+        // r_bw_all_intr = t_year * 26 * r_bweek_topay - v_balance;
+        // r_bw_per_intr = r_bw_all_intr / (t_year * 26);
+        r_bweek_topay=r_month_topay/2;
+        let t_r_week=Math.log((v_balance*(t_q-1)/(r_bweek_topay*t_q))+1)/Math.log(t_q);
+        console.log("real year"+t_r_week/26);
+        let t_r_bw_year=Math.ceil(t_r_week/26);
+        r_bw_all_intr=t_r_week*r_bweek_topay-v_balance;
+        r_bw_per_intr=r_bw_all_intr/t_r_week;
 
         t_current_balance = v_balance;
         r_bw_line = new Array();
-        for (let i = 1; i <= t_year * 26; i++) {
+        for (let i = 1; i <= t_r_bw_year * 26; i++) {
             let t_pay_current = r_bweek_topay - t_current_balance * t_real_bwrate;
             t_current_balance -= t_pay_current;
             if (i % 26 == 0) {
                 let temp = t_current_balance.toFixed(2);
+                if(temp<=0){
+                    temp=0;
+                }
                 r_bw_line.push(temp);
             }
         }
 
         console.log(r_bw_line);
+
+        let t_year_line=new Array();
+        for(let i=1;i<=r_m_line.length;i++){
+            t_year_line.push(i);
+        }
+
+        console.log(t_year_line);
+
+        t_json_excel=[["年限（第n年末）","月供","双周供"]];
+
+        for(let i=0;i<r_m_line.length;i++){
+            let temp=new Array();
+            if(i<r_bw_line.length){
+                temp.push(t_year_line[i],r_m_line[i],r_bw_line[i]);
+            }else{
+                temp.push(t_year_line[i],r_m_line[i],"已经还完");
+            }
+            t_json_excel.push(temp);
+        }
+
+        r_excel=XLSX.utils.aoa_to_sheet(t_json_excel);
+        console.log(r_excel);
 
         r_bweek_topay = r_bweek_topay.toFixed(2);
         r_bw_all_intr = r_bw_all_intr.toFixed(2);
@@ -220,8 +271,14 @@ function Calculate() {
         SetValue(r_m_all_intr, r_month_topay, r_m_per_intr, r_bw_all_intr, r_bweek_topay, r_bw_per_intr);
 
         if (istableshow) {
+            
             for (let i = 0; i < t_year; i++) {
-                AddTableElement(i + 1, r_m_line[i], r_bw_line[i]);
+                if(i<r_bw_line.length){
+                    AddTableElement(i + 1, r_m_line[i], r_bw_line[i]);
+                }else{
+                    AddTableElement(i+1,r_m_line[i],"已经还完");
+                }
+                
             }
         }
 
@@ -244,6 +301,40 @@ function DownLoadTxt(filename, text) {
     }
 }
 
+function EncodeUTF16(utf16Str) {
+    let utf8Arr = [];
+    var byteSize = 0;
+    for (let i = 0; i < utf16Str.length; i++) {
+        //获取字符Unicode码值
+        let code = utf16Str.charCodeAt(i);
+
+        //如果码值是1个字节的范围，则直接写入
+        if (code >= 0x00 && code <= 0x7f) {
+            byteSize += 1;
+            utf8Arr.push(code);
+
+            //如果码值是2个字节以上的范围，则按规则进行填充补码转换
+        } else if (code >= 0x80 && code <= 0x7ff) {
+            byteSize += 2;
+            utf8Arr.push((192 | (31 & (code >> 6))));
+            utf8Arr.push((128 | (63 & code)))
+        } else if ((code >= 0x800 && code <= 0xd7ff)
+            || (code >= 0xe000 && code <= 0xffff)) {
+            byteSize += 3;
+            utf8Arr.push((224 | (15 & (code >> 12))));
+            utf8Arr.push((128 | (63 & (code >> 6))));
+            utf8Arr.push((128 | (63 & code)))
+        } else if(code >= 0x10000 && code <= 0x10ffff ){
+            byteSize += 4;
+            utf8Arr.push((240 | (7 & (code >> 18))));
+            utf8Arr.push((128 | (63 & (code >> 12))));
+            utf8Arr.push((128 | (63 & (code >> 6))));
+            utf8Arr.push((128 | (63 & code)))
+        }
+    }
+
+    return utf8Arr
+}
 //====================================
 // let testbtn=document.getElementById("test-btn");
 // testbtn.addEventListener('click',()=>{
